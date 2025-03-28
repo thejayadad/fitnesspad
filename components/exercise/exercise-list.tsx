@@ -57,7 +57,7 @@ const Exerciselist = () => {
   })
   
 
-  const [isPending, startTransition] = useTransition()
+  const [, startTransition] = useTransition()
 
   const fetchExercises = async () => {
     const data = await getExercises()
