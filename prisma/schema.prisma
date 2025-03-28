@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+
+
+model Exercise {
+  id         String    @id @default(uuid())
+  name       String
+  type       ExerciseType
+  date      DateTime
+  note       String
+  details    ExerciseDetails[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model ExerciseDetails {
+  id         String    @id @default(uuid())
+  exerciseId String
+  exercise   Exercise  @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  setNumber  Int  // Set 1, Set 2, Set 3...
+  reps       Int? // Only for strength exercises
+  weight     Float? // Only for strength exercises
+  duration   Int? // Only for cardio (minutes)
+  calories   Int? // Only for cardio
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+enum ExerciseType {
+  STRENGTH
+  CARDIO
+}

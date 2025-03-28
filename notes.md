@@ -12,3 +12,9 @@
 - google console
 - prisma adapter
 - npm exec prisma migrate dev
+
+
+## LAYOUT
+- logo
+- main layout
+- add header into layout
